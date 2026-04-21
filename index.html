@@ -1,0 +1,493 @@
+<!DOCTYPE html>
+<html lang="bg">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Екопътеки – Златоград</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link href="https://fonts.googleapis.com/css2?family=Playfair+Display:ital,wght@0,400;0,700;1,400&family=Source+Serif+4:wght@300;400;600&display=swap" rel="stylesheet" />
+  <style>
+    *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+
+    :root {
+      --forest:   #2d4a2f;
+      --moss:     #4a6741;
+      --sage:     #8aad7a;
+      --cream:    #f5f0e8;
+      --sand:     #e8dfc8;
+      --warm:     #c8956c;
+      --text:     #2a2218;
+      --muted:    #6b5e4e;
+    }
+
+    html { scroll-behavior: smooth; }
+
+    body {
+      background: var(--cream);
+      color: var(--text);
+      font-family: 'Source Serif 4', Georgia, serif;
+      font-weight: 300;
+      line-height: 1.7;
+    }
+
+    /* ── HEADER ── */
+    header {
+      position: relative;
+      background: var(--forest);
+      color: var(--cream);
+      padding: 70px 24px 60px;
+      text-align: center;
+      overflow: hidden;
+    }
+    header::before {
+      content: '';
+      position: absolute;
+      inset: 0;
+      background:
+        radial-gradient(ellipse 80% 60% at 50% 110%, rgba(74,103,65,.55) 0%, transparent 70%),
+        url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='400' height='400'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='.65' numOctaves='3' stitchTiles='stitch'/%3E%3CfeColorMatrix type='saturate' values='0'/%3E%3C/filter%3E%3Crect width='400' height='400' filter='url(%23n)' opacity='.08'/%3E%3C/svg%3E");
+      pointer-events: none;
+    }
+    .header-eyebrow {
+      font-family: 'Source Serif 4', serif;
+      font-size: .75rem;
+      letter-spacing: .22em;
+      text-transform: uppercase;
+      color: var(--sage);
+      margin-bottom: 14px;
+      opacity: .9;
+    }
+    header h1 {
+      font-family: 'Playfair Display', serif;
+      font-size: clamp(2.4rem, 6vw, 4rem);
+      font-weight: 700;
+      line-height: 1.15;
+      letter-spacing: -.01em;
+    }
+    header h1 em {
+      font-style: italic;
+      color: var(--sage);
+    }
+    .header-sub {
+      margin-top: 18px;
+      font-size: 1.05rem;
+      color: rgba(245,240,232,.75);
+      max-width: 520px;
+      margin-inline: auto;
+    }
+    .header-divider {
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      gap: 12px;
+      margin-top: 36px;
+    }
+    .header-divider span { width: 48px; height: 1px; background: var(--sage); opacity: .6; }
+    .header-divider svg { width: 18px; height: 18px; fill: var(--sage); opacity: .8; }
+
+    /* ── INTRO ── */
+    .intro {
+      max-width: 740px;
+      margin: 54px auto 0;
+      padding: 0 24px;
+      text-align: center;
+    }
+    .intro p {
+      font-size: 1.08rem;
+      color: var(--muted);
+    }
+
+    /* ── TRAILS SECTION ── */
+    .trails {
+      max-width: 900px;
+      margin: 56px auto 0;
+      padding: 0 24px;
+      display: flex;
+      flex-direction: column;
+      gap: 36px;
+    }
+
+    /* ── CARD ── */
+    .card {
+      background: #fff;
+      border-radius: 4px;
+      border-left: 4px solid var(--moss);
+      box-shadow: 0 2px 18px rgba(45,74,47,.07);
+      overflow: hidden;
+      transition: box-shadow .25s;
+      animation: fadeUp .6s ease both;
+    }
+    .card:hover { box-shadow: 0 6px 32px rgba(45,74,47,.13); }
+    @keyframes fadeUp {
+      from { opacity: 0; transform: translateY(22px); }
+      to   { opacity: 1; transform: none; }
+    }
+    .card:nth-child(1) { animation-delay: .05s; }
+    .card:nth-child(2) { animation-delay: .15s; }
+    .card:nth-child(3) { animation-delay: .25s; }
+    .card:nth-child(4) { animation-delay: .35s; }
+
+    /* ── CARD IMAGE ── */
+    .card-image {
+      position: relative;
+      width: 100%;
+      height: 240px;
+      overflow: hidden;
+    }
+    .card-image img {
+      width: 100%;
+      height: 100%;
+      object-fit: cover;
+      display: block;
+      transition: transform .6s ease;
+      filter: brightness(.92) saturate(1.05);
+    }
+    .card:hover .card-image img {
+      transform: scale(1.04);
+    }
+    .card-image-overlay {
+      position: absolute;
+      inset: 0;
+      background: linear-gradient(
+        to bottom,
+        transparent 40%,
+        rgba(45,74,47,.55) 100%
+      );
+      pointer-events: none;
+    }
+    .card-image-badge {
+      position: absolute;
+      bottom: 14px;
+      left: 18px;
+      font-family: 'Playfair Display', serif;
+      font-size: 2.6rem;
+      font-weight: 700;
+      color: rgba(245,240,232,.85);
+      line-height: 1;
+      text-shadow: 0 2px 12px rgba(0,0,0,.35);
+      user-select: none;
+    }
+
+    /* ── CARD BODY ── */
+    .card-content {
+      padding: 28px 36px 28px;
+    }
+
+    .card h2 {
+      font-family: 'Playfair Display', serif;
+      font-size: 1.45rem;
+      font-weight: 700;
+      color: var(--forest);
+      line-height: 1.25;
+      margin-bottom: 16px;
+    }
+
+    /* stats row */
+    .stats {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 10px 24px;
+      margin-bottom: 20px;
+    }
+    .stat {
+      display: flex;
+      align-items: center;
+      gap: 6px;
+      font-size: .83rem;
+      color: var(--muted);
+      letter-spacing: .03em;
+    }
+    .stat-dot {
+      width: 7px; height: 7px;
+      border-radius: 50%;
+      background: var(--sage);
+      flex-shrink: 0;
+    }
+    .stat strong { color: var(--forest); font-weight: 600; }
+
+    .card-body { font-size: .97rem; color: var(--muted); }
+    .card-body p + p { margin-top: .7em; }
+
+    /* highlight inside card */
+    .highlight-box {
+      margin-top: 16px;
+      padding: 13px 18px;
+      background: var(--cream);
+      border-radius: 3px;
+      font-size: .9rem;
+      color: var(--forest);
+    }
+    .highlight-box strong { color: var(--moss); }
+
+    /* ── DIVIDER ── */
+    .section-divider {
+      text-align: center;
+      margin: 64px auto 0;
+      color: var(--sage);
+      font-size: 1.5rem;
+      letter-spacing: .3em;
+      opacity: .5;
+    }
+
+    /* ── CREDITS ── */
+    .credits {
+      max-width: 900px;
+      margin: 56px auto 0;
+      padding: 0 24px 80px;
+    }
+    .credits h3 {
+      font-family: 'Playfair Display', serif;
+      font-size: 1.2rem;
+      font-weight: 700;
+      color: var(--forest);
+      margin-bottom: 18px;
+      display: flex;
+      align-items: center;
+      gap: 10px;
+    }
+    .credits h3::after {
+      content: '';
+      flex: 1;
+      height: 1px;
+      background: var(--sand);
+    }
+    .credits-grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fill, minmax(240px, 1fr));
+      gap: 14px;
+    }
+    .credit-item {
+      background: #fff;
+      border: 1px solid var(--sand);
+      border-radius: 4px;
+      padding: 16px 20px;
+    }
+    .credit-item .credit-label {
+      font-size: .72rem;
+      letter-spacing: .14em;
+      text-transform: uppercase;
+      color: var(--sage);
+      margin-bottom: 4px;
+    }
+    .credit-item a {
+      font-size: .92rem;
+      color: var(--forest);
+      text-decoration: none;
+      font-weight: 600;
+      border-bottom: 1px solid var(--sand);
+      transition: border-color .2s, color .2s;
+    }
+    .credit-item a:hover { color: var(--moss); border-color: var(--sage); }
+    .credit-item .credit-note {
+      margin-top: 4px;
+      font-size: .8rem;
+      color: var(--muted);
+    }
+
+    /* ── FOOTER ── */
+    footer {
+      background: var(--forest);
+      color: rgba(245,240,232,.55);
+      text-align: center;
+      padding: 22px 24px;
+      font-size: .8rem;
+      letter-spacing: .04em;
+    }
+    footer strong { color: var(--sage); }
+
+    /* ── RESPONSIVE ── */
+    @media (max-width: 600px) {
+      .card-image { height: 180px; }
+      .card-content { padding: 20px 18px 18px; }
+    }
+  </style>
+</head>
+<body>
+
+<!-- ═══════════════ HEADER ═══════════════ -->
+<header>
+  <p class="header-eyebrow">Родопи &nbsp;·&nbsp; България</p>
+  <h1>Екопътеки около<br><em>Златоград</em></h1>
+  <p class="header-sub">Открийте планинските маршрути, историческите местности и природните забележителности край южния родопски град</p>
+  <div class="header-divider">
+    <span></span>
+    <svg viewBox="0 0 24 24"><path d="M12 2C8.13 2 5 5.13 5 9c0 5.25 7 13 7 13s7-7.75 7-13c0-3.87-3.13-7-7-7zm0 9.5c-1.38 0-2.5-1.12-2.5-2.5S10.62 6.5 12 6.5s2.5 1.12 2.5 2.5S13.38 11.5 12 11.5z"/></svg>
+    <span></span>
+  </div>
+</header>
+
+<!-- ═══════════════ INTRO ═══════════════ -->
+<section class="intro">
+  <p>Районът около Златоград предлага четири добре обозначени екопътеки – от леки семейни разходки до по-сериозни планински преходи с панорамни гледки към Гърция. Всеки маршрут носи своя характер, история и природни акценти.</p>
+</section>
+
+<!-- ═══════════════ TRAILS ═══════════════ -->
+<section class="trails">
+
+  <!-- 1 – Света Неделя: rocky peak, panoramic view -->
+  <article class="card">
+    <div class="card-image">
+      <img
+        src="https://zlatograd.bg/images/ekapateka-sv-nedelya.jpg"
+        alt="Панорамна гледка от планински връх към далечни хоризонти"
+        loading="lazy"
+      />
+      <div class="card-image-overlay"></div>
+      <div class="card-image-badge">01</div>
+    </div>
+    <div class="card-content">
+      <h2>Екопътека „Света Неделя"</h2>
+      <div class="stats">
+        <div class="stat"><span class="stat-dot"></span><strong>~12 км</strong> &nbsp;(двете посоки)</div>
+        <div class="stat"><span class="stat-dot"></span><strong>~3 часа</strong></div>
+        <div class="stat"><span class="stat-dot"></span>Денивелация <strong>~400 м</strong></div>
+        <div class="stat"><span class="stat-dot"></span>Маркировка <strong>синя</strong></div>
+      </div>
+      <div class="card-body">
+        <p>Най-популярният и живописен маршрут край Златоград. Началото е при Воденицата (Караджейката) в края на Етнографския комплекс. Пътеката се изкачва покрай скалния феномен и древното тракийско светилище <strong>„Белите камъни"</strong>.</p>
+        <p>Крайната точка е <strong>връх „Света Неделя"</strong> (865 м н.в.), където е изграден едноименен параклис. При ясно време от върха се разкрива зашеметяваща панорама – погледът достига Бяло море и най-високия връх на гръцкия остров Самотраки.</p>
+      </div>
+      <div class="highlight-box">
+        <strong>Акцент:</strong> Древно тракийско светилище „Белите камъни" и параклис на върха с изглед към Егейско море
+      </div>
+    </div>
+  </article>
+
+  <!-- 2 – Св. Атанас: shaded forest trail, chapel -->
+  <article class="card">
+    <div class="card-image">
+      <img
+        src="https://zlatograd.top/wp-content/uploads/2016/07/sv.Atanas.jpg"
+        alt="Сенчеста широколистна гора с дрехата на летен ден"
+        loading="lazy"
+      />
+      <div class="card-image-overlay"></div>
+      <div class="card-image-badge">02</div>
+    </div>
+    <div class="card-content">
+      <h2>Екопътека „Златоград – връх Св. Атанас"</h2>
+      <div class="stats">
+        <div class="stat"><span class="stat-dot"></span><strong>~4 км</strong></div>
+        <div class="stat"><span class="stat-dot"></span><strong>~2 часа</strong> (в едната посока)</div>
+        <div class="stat"><span class="stat-dot"></span>Подходящ за <strong>горещи дни</strong></div>
+      </div>
+      <div class="card-body">
+        <p>Приятен преход, идеален за по-топлите дни. Тръгва от района на пералня „Беловидово" в южния край на Златоград и преминава основно през <strong>сенчеста широколистна гора</strong>.</p>
+        <p>По трасето са изградени множество чешми с чиста планинска вода и беседки за почивка. Пътеката преминава покрай скалното образувание <strong>„Чуката"</strong> и достига до параклиса „Св. Атанас".</p>
+      </div>
+      <div class="highlight-box">
+        <strong>История:</strong> На стратегическото място при параклиса някога се е издигала древна крепост, охранявала пътищата в района
+      </div>
+    </div>
+  </article>
+
+  <!-- 3 – Дельо Хайдутин: ancient forest, open meadow, legend -->
+  <article class="card">
+    <div class="card-image">
+      <img
+        src="https://zlatograd.free.bg/images/eko.jpg"
+        alt="Вековна гора и просветлена поляна в Родопите"
+        loading="lazy"
+      />
+      <div class="card-image-overlay"></div>
+      <div class="card-image-badge">03</div>
+    </div>
+    <div class="card-content">
+      <h2>Екопътека „По стъпките на Дельо Хайдутин"</h2>
+      <div class="stats">
+        <div class="stat"><span class="stat-dot"></span>Историко-природен маршрут</div>
+        <div class="stat"><span class="stat-dot"></span>Вековни гори и <strong>открити поляни</strong></div>
+      </div>
+      <div class="card-body">
+        <p>Тематична пътека, посветена на легендарния родопски герой и закрилник на Златоград – <strong>Дельо войвода</strong>. Преминава през вековни гори и поляни, свързани с живота и подвизите му в местния фолклор.</p>
+        <p>Маршрутът включва исторически местности, сред които <strong>лобното място</strong>, където според преданията войводата бил прострелян с митичния сребърен куршум. Планинската разходка е неразривно преплетена с родопските легенди.</p>
+      </div>
+      <div class="highlight-box">
+        <strong>Акцент:</strong> Съчетание от планинска природа и жива народна памет за Дельо Хайдутин
+      </div>
+    </div>
+  </article>
+
+  <!-- 4 – Пътека на здравето: gentle path, benches, family walk -->
+  <article class="card">
+    <div class="card-image">
+      <img
+        src="https://zlatograd.bg/images/bucheto.jpg"
+        alt="Спокойна семейна пътека сред зелена природа"
+        loading="lazy"
+      />
+      <div class="card-image-overlay"></div>
+      <div class="card-image-badge">04</div>
+    </div>
+    <div class="card-content">
+      <h2>Пътека на здравето</h2>
+      <div class="stats">
+        <div class="stat"><span class="stat-dot"></span>Лек маршрут</div>
+        <div class="stat"><span class="stat-dot"></span>Подходящ за <strong>всички</strong></div>
+        <div class="stat"><span class="stat-dot"></span>Равен терен с <strong>пейки</strong></div>
+      </div>
+      <div class="card-body">
+        <p>Лесно достъпен маршрут, специално предназначен за семейства с малки деца, възрастни хора и всички, търсещи спокойна разходка без сериозно физическо натоварване.</p>
+        <p>Пътеката е отлично облагородена – равна, с удобни пейки за почивка сред <strong>чистия въздух на Родопите</strong>. Идеална за ежедневен отдих и лека разходка в природата.</p>
+      </div>
+      <div class="highlight-box">
+        <strong>Препоръчва се за:</strong> Семейства с деца, възрастни, рехабилитация, ежедневна разходка
+      </div>
+    </div>
+  </article>
+
+</section>
+
+<!-- ═══════════════ DIVIDER ═══════════════ -->
+<div class="section-divider">· · ·</div>
+
+<!-- ═══════════════ CREDITS ═══════════════ -->
+<section class="credits">
+  <h3>Източници и препратки</h3>
+  <div class="credits-grid">
+
+    <div class="credit-item">
+      <div class="credit-label">Официален сайт</div>
+      <a href="https://zlatograd.bg" target="_blank" rel="noopener">zlatograd.bg</a>
+      <p class="credit-note">Официален сайт на Община Златоград – туризъм и маршрути</p>
+    </div>
+
+    <div class="credit-item">
+      <div class="credit-label">Енциклопедия</div>
+      <a href="https://bg.wikipedia.org/wiki/%D0%97%D0%BB%D0%B0%D1%82%D0%BE%D0%B3%D1%80%D0%B0%D0%B4" target="_blank" rel="noopener">Wikipedia – Златоград</a>
+      <p class="credit-note">Обща информация за града и региона</p>
+    </div>
+
+    <div class="credit-item">
+      <div class="credit-label">Енциклопедия</div>
+      <a href="https://bg.wikipedia.org/wiki/%D0%94%D0%B5%D0%BB%D1%8C%D0%BE_%D0%A5%D0%B0%D0%B9%D0%B4%D1%83%D1%82%D0%B8%D0%BD" target="_blank" rel="noopener">Wikipedia – Дельо Хайдутин</a>
+      <p class="credit-note">История на легендарния родопски войвода</p>
+    </div>
+
+    <div class="credit-item">
+      <div class="credit-label">Туристически портал</div>
+      <a href="https://rhodopi.travel" target="_blank" rel="noopener">rhodopi.travel</a>
+      <p class="credit-note">Информация за маршрути в Родопите</p>
+    </div>
+
+    <div class="credit-item">
+      <div class="credit-label">Туристически портал</div>
+      <a href="visitmybulgaria.com" target="_blank" rel="noopener">visitmybulgaria.com</a>
+      <p class="credit-note"уристически портал на България</p>
+    </div>
+
+    <div class="credit-item">
+      <div class="credit-label">Автор</div>
+      <a href="yungcastle.xyz" target="_blank" rel="noopener">yungcastle.xyz</a>
+      <p class="credit-note"Моят личен website</p>
+    </div>
+
+  </div>
+</section>
+<!-- ═══════════════ FOOTER ═══════════════ -->
+<footer>
+  <strong>Екопътеки – Златоград</strong> &nbsp;·&nbsp; Родопи, България &nbsp;·&nbsp; Учебен проект
+</footer>
+
+</body>
+</html>
